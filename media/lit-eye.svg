@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  viewBox="4 1 42.2994 42.2994"
+  xmlns="http://www.w3.org/2000/svg"
+  width="256"
+  height="256">
+  <path
+    d="m 14.536312,29.130175 5.213763,6.951684 V 23.916411 l -5.213763,-6.951682 v 12.165446 m 5.213763,-5.213764 V 13.488886 L 24.963838,6.5372031 V 16.964729 m 0,0 -5.213763,6.951682 z m 0,0 v 12.165446 l 5.213763,-6.951684 V 10.013045 Z m 5.213763,5.213762 5.213763,-6.951684 v 13.903368 l -5.213763,6.951684 z"
+    fill="currentColor"
+    id="path1"
+    style="display:inline;stroke-width:1.73792" />
+  <ellipse
+    style="display:none;fill:none;stroke:currentColor;stroke-width:2.26772"
+    id="path2"
+    cx="26.615894"
+    cy="29.300159"
+    rx="10.468535"
+    ry="11.597795" />
+
+  <circle
+    style="fill:none;stroke:currentColor;stroke-width:5"
+    id="path4"
+    cx="25.1497"
+    cy="22.1497"
+    r="18.6497" />
+</svg>

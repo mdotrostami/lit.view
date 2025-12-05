@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "max-len": "off",
+    "@typescript-eslint/indent": "off"
+  }
+}

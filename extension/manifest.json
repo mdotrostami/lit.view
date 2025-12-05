@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Lit View",
+  "short_name": "Lit View",
+  "description": "Preview Lit components in-place with a right-side panel, context menus, and command palette shortcuts.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "120",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab",
+    "scripting",
+    "sidePanel",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "Open Lit View"
+  },
+  "commands": {
+    "preview-lit-component": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Preview the current Lit component in the side panel"
+    }
+  },
+  "side_panel": {
+    "default_path": "panel/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

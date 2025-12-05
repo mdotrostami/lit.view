@@ -1,0 +1,100 @@
+{
+  "name": "lit-view",
+  "displayName": "Lit View",
+  "description": "Right-click a Lit TypeScript file to preview it in a webview.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:lit-view.previewLitFile",
+    "onCommand:workbench.view.extension.litViewPreview",
+    "onView:litViewPreviewView",
+    "onView:litViewMockView"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lit-view.previewLitFile",
+        "title": "Preview Lit File",
+        "category": "Lit View"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "lit-view.previewLitFile",
+          "group": "navigation",
+          "when": "resourceExtname == .ts && resourceLangId == typescript"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "lit-view.previewLitFile",
+          "group": "navigation",
+          "when": "editorLangId == typescript"
+        }
+      ]
+    }
+    ,
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "litViewPreview",
+          "title": "Lit View",
+          "icon": "media/lit-eye.svg"
+        }
+      ]
+    },
+    "views": {
+      "litViewPreview": [
+        {
+          "id": "litViewPreviewView",
+          "name": "Preview",
+          "contextualTitle": "Lit View Preview",
+          "type": "webview"
+        },
+        {
+          "id": "litViewMockView",
+          "name": "Mock Data",
+          "contextualTitle": "Lit View Mock Data",
+          "type": "webview"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "test:unit": "npm run compile && node --test tests/**/*.test.js",
+    "check": "npm run lint && npm run test:unit",
+    "package": "vsce package"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mdotrostami/lit.view.git"
+  },
+  "devDependencies": {
+    "@types/node": "20.x",
+    "@types/vscode": "^1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.7.1",
+    "eslint": "^8.56.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "esbuild": "^0.27.0",
+    "lit": "^3.3.1"
+  }
+}

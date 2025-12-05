@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lit View Preview</title>
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body>
+    <header class="panel-header">
+      <div class="brand">
+        <img src="lit-eye.svg" alt="Lit View icon" class="brand-icon" />
+        <div>
+          <p class="panel-label">Lit View</p>
+          <h1>Component Preview</h1>
+        </div>
+      </div>
+      <div class="panel-meta">
+        <p id="preview-meta">Waiting for selection…</p>
+        <span id="hot-indicator" class="hot-indicator" hidden>Hot Reloaded</span>
+      </div>
+    </header>
+
+    <main id="panel-root" class="panel-shell">
+      <section class="panel-status">
+        <p id="status-line" class="status-line">
+          Select a Lit component or use the command palette to open a preview.
+        </p>
+        <dl id="preview-details" class="preview-details"></dl>
+      </section>
+
+      <section class="preview-board">
+        <div class="preview-header">
+          <div>
+            <p class="panel-label">Dependencies</p>
+            <h2>Breadcrumbs</h2>
+          </div>
+          <button id="reload-button" class="ghost-button" type="button">Reload Preview</button>
+        </div>
+        <nav id="breadcrumbs" class="breadcrumbs"></nav>
+      </section>
+
+      <section class="panel-preview">
+        <div class="preview-toolbar">
+          <div>
+            <p class="panel-label">Current Component</p>
+            <h2 id="component-title">Nothing selected</h2>
+          </div>
+          <p id="preview-subtitle" class="preview-subtitle">Waiting for a bundle…</p>
+        </div>
+        <div class="preview-stage">
+          <iframe id="preview-frame" class="preview-frame" title="Lit component preview"></iframe>
+          <div class="preview-placeholder" id="preview-placeholder">
+            <p>The bundled component preview iframe will appear here.</p>
+            <p class="hint">Use context menus or the keyboard shortcut to trigger Lit View.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-recents">
+        <header class="panel-recents__header">
+          <div>
+            <p class="panel-label">Recent Components</p>
+            <h2>History</h2>
+          </div>
+          <label class="pref-toggle">
+            <input type="checkbox" id="pref-auto-reload" checked />
+            Auto reload preview
+          </label>
+        </header>
+        <ul id="recents-list" class="recents-list"></ul>
+      </section>
+
+      <section class="panel-docs" id="panel-docs">
+        <header class="panel-docs__header">
+          <div>
+            <p class="panel-label">Docs & Tips</p>
+            <h2>Context7 Highlights</h2>
+          </div>
+        </header>
+        <ul id="docs-list" class="docs-list"></ul>
+      </section>
+
+      <section class="panel-mock">
+        <header class="panel-mock__header">
+          <div>
+            <p class="panel-label">Mock Data</p>
+            <h2>Properties & Slots</h2>
+          </div>
+          <button id="reset-mock" class="ghost-button" type="button">Reset</button>
+        </header>
+
+        <div class="mock-editor">
+          <aside class="mock-meta">
+            <p class="mock-meta__title">Detected Inputs</p>
+            <ul id="mock-schema" class="mock-schema"></ul>
+          </aside>
+          <div class="mock-inputs">
+            <label for="mock-json" class="panel-label">Editable JSON</label>
+            <textarea id="mock-json" class="mock-json" spellcheck="false"></textarea>
+            <p id="mock-status" class="mock-status">Waiting for component metadata…</p>
+            <div class="mock-actions">
+              <button id="suggest-mock" class="ghost-button" type="button">Insert Dummy Data</button>
+            </div>
+            <div id="mock-form" class="mock-form"></div>
+            <div class="preset-controls">
+              <input id="preset-name" class="preset-name" type="text" placeholder="Preset name" />
+              <button id="save-preset" class="ghost-button" type="button">Save Preset</button>
+            </div>
+            <ul id="preset-list" class="preset-list"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="panel.js"></script>
+  </body>
+</html>

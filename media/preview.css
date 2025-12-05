@@ -1,0 +1,284 @@
+/* =========================================================
+   BASE THEME VARIABLES (auto-applies to all themes)
+   VS Code adds .vscode-light / .vscode-dark classes to body
+   ========================================================= */
+:root {
+  color-scheme: light dark;
+
+  /* surfaces */
+  --bg: var(--vscode-panel-background);
+  --surface: var(--vscode-editor-background);
+  --card: rgba(0,0,0,0.06);      /* default - overridden per theme */
+  --card-strong: rgba(0,0,0,0.12);
+
+  /* borders */
+  --border: rgba(0,0,0,0.12);     /* overridden per theme */
+
+  /* text */
+  --text: var(--vscode-editor-foreground);
+  --text-muted: var(--vscode-descriptionForeground);
+
+  /* accents */
+  --accent: var(--vscode-focusBorder);
+  --accent-glow: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* =========================================================
+   DARK THEME OVERRIDES
+   ========================================================= */
+.vscode-dark {
+  --card: rgba(255,255,255,0.05);
+  --card-strong: rgba(255,255,255,0.12);
+  --border: rgba(255,255,255,0.10);
+  --text: var(--vscode-editor-foreground);
+  --text-muted: var(--vscode-descriptionForeground);
+}
+
+/* =========================================================
+   LIGHT THEME OVERRIDES
+   ========================================================= */
+.vscode-light {
+  --card: rgba(0,0,0,0.03);
+  --card-strong: rgba(0,0,0,0.07);
+  --border: rgba(0,0,0,0.12);
+  --text: #1a1a1a;
+  --text-muted: #555;
+}
+
+/* =========================================================
+   HIGH-CONTRAST OVERRIDES
+   ========================================================= */
+.vscode-high-contrast {
+  --border: var(--vscode-focusBorder);
+  --card: var(--vscode-panel-background);
+  --card-strong: var(--vscode-panel-background);
+}
+
+/* =========================================================
+   RESET + GLOBALS
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 28px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--vscode-font-family, sans-serif);
+  font-size: var(--vscode-font-size, 13px);
+
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================================================
+   PANEL
+   ========================================================= */
+.panel-shell {
+  width: min(860px, 100%);
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px) saturate(1.2);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.25),
+    0 0 0 1px rgba(255,255,255,0.03);
+  overflow: hidden;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* =========================================================
+   STACK
+   ========================================================= */
+.panel-stack {
+  padding: 18px;
+}
+
+.stack-body {
+  padding: 18px;
+  background: var(--card);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+.preview-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preview-root,
+.preview-source {
+  min-height: 180px;
+  border-radius: 10px;
+  padding: 14px;
+  background: var(--card-strong);
+  border: 1px solid var(--border);
+  overflow: auto;
+}
+
+.preview-source {
+  font-family: var(--vscode-editor-font-family, monospace);
+  white-space: pre-wrap;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.preview-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 180px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.preview-placeholder__icon {
+  width: 80px;
+  height: 80px;
+  opacity: 0.6;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
+}
+
+.preview-placeholder__hint {
+  margin: 0;
+  font-size: 0.85rem;
+  max-width: 280px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   FORM FIELDS
+   ========================================================= */
+.mock-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mock-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.vscode-light .mock-field {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.mock-field:last-child {
+  border-bottom: none;
+}
+
+.mock-field__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.mock-field__chip {
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 0.65rem;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+/* INPUTS -------------------------------------------------- */
+.mock-field__input {
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mock-field__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.mock-field__input[type="color"] {
+  height: 36px;
+  padding: 0;
+}
+
+/* CHECKBOX */
+.mock-field__input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.mock-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ghost-button {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.ghost-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* =========================================================
+   STATUS MESSAGES
+   ========================================================= */
+.mock-status {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.mock-status[data-variant="success"] {
+  color: #34d399;
+}
+
+.mock-status[data-variant="error"] {
+  color: #f87171;
+}
