@@ -2,7 +2,7 @@
   "name": "lit-view",
   "displayName": "Lit View",
   "description": "Right-click a Lit TypeScript file to preview it in a webview.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.105.0"
   },
@@ -39,8 +39,7 @@
           "when": "editorLangId == typescript"
         }
       ]
-    }
-    ,
+    },
     "viewsContainers": {
       "activitybar": [
         {
