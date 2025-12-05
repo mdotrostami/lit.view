@@ -1,0 +1,22 @@
+# Exclude source and development-only files from the published package
+src/
+tests/
+docs/
+.vscode/
+.vscode-test/
+.github/
+node_modules/
+out/test/
+tsconfig.json
+tsconfig.*.json
+package-lock.json
+README.md
+media/
+examples/
+extension/
+some.js
+some.js.map
+lit-view-0.0.1.vsix
+previewConfig.json
+.eslintrc.json
+*.tsbuildinfo
