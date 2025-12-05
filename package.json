@@ -75,7 +75,11 @@
     "test": "node ./out/test/runTest.js",
     "test:unit": "npm run compile && node --test tests/**/*.test.js",
     "check": "npm run lint && npm run test:unit",
-    "package": "vsce package"
+    "package": "vsce package",
+    "bump:patch": "npm version patch -m \"chore: release %s\"",
+    "bump:minor": "npm version minor -m \"chore: release %s\"",
+    "bump:major": "npm version major -m \"chore: release %s\"",
+    "release": "npm run check && npm run package && git push origin HEAD --follow-tags"
   },
   "license": "MIT",
   "repository": {
