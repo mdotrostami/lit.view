@@ -1,10 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { promises as fs } from 'fs';
-import ts from 'typescript';
 import { build, type PluginBuild } from 'esbuild';
+import ts from 'typescript';
 import { inferMockSchemaFromSource, MockField } from './shared/mockSchema';
-
 export type PreviewState = {
     fileUri: vscode.Uri;
     fileName: string;

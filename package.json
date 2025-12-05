@@ -2,7 +2,7 @@
   "name": "lit-view",
   "displayName": "Lit View",
   "description": "Right-click a Lit TypeScript file to preview it in a webview.",
-  "icon": "media/lit-eye.svg",
+  "icon": "media/lit-eye.png",
   "galleryBanner": {
     "color": "#000000",
     "theme": "dark"
