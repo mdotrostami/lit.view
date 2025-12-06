@@ -7,7 +7,7 @@
     "color": "#000000",
     "theme": "dark"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.105.0"
   },
@@ -105,5 +105,9 @@
     "lit": "^3.3.1",
     "typescript": "^5.9.3"
   },
-  "bundleDependencies":["esbuild","typescript","lit"]
+  "bundleDependencies": [
+    "esbuild",
+    "typescript",
+    "lit"
+  ]
 }
