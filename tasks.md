@@ -8,6 +8,6 @@ Guideline: work one task at a time. When you start a task, mark it `[inprogress]
 
 
 ## Tasks
-[] capture the Lit preview `PreviewState` lifecycle so the architecture doc explains how the coordinator owns file metadata, mock schema, and live mock data flows.
-[] describe how `media/preview.css` centralizes the shared styles for both webviews, noting theme variables, layout wrappers, and field/button helpers.
-[] refresh the task board once documentation updates are merged so the overview reflects the new state and styling write-ups.
+[x] revert the resolver/bundler asset aliasing and restore the previous focus on TypeScript/JavaScript imports so static files are resolved by the host again.
+[x] extend `LitPreviewCoordinator.bundleFile` to collect the image assets used by the entry component, turn them into webview-safe URIs (or inline data), and expose them on the preview state for the runtime to consume.
+[x] document the new host-driven asset pipeline (task board + overview) so the architecture section explains that the coordinator now supplies resolved assets to the preview runtime instead of relying on esbuild loaders.

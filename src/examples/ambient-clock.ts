@@ -9,26 +9,40 @@ export class AmbientClock extends LitElement {
   static override styles = css`
     :host {
       display: block;
-      background: radial-gradient(circle at top, #0f172a 0%, #020617 70%);
-      color: #e2e8f0;
+
+      background:
+        radial-gradient(circle at top left, rgba(238, 238, 238, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at bottom right, rgba(17, 43, 0, 0.25) 0%, transparent 70%),
+        rgba(12, 20, 32, 0.7);
+
+      color: rgba(226, 232, 240, 0.95);
       border-radius: 20px;
-      padding: 24px 28px;
-      max-width: 320px;
+      padding: 28px 30px;
+      margin: auto;
+      max-width: 340px;
       font-family: 'Inter', system-ui, sans-serif;
-      border: 1px solid rgba(148, 163, 184, 0.3);
+
+      border: 2px solid rgba(148, 163, 184, 0.28);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.45),
+        inset 0 0 22px rgba(255,255,255,0.03);
     }
 
     .time {
-      font-size: 2.6rem;
+      font-size: 2.7rem;
       font-weight: 600;
       letter-spacing: 0.05em;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
     }
 
     .zone {
       display: flex;
       justify-content: space-between;
-      margin-top: 12px;
-      font-size: 0.85rem;
+      margin-top: 14px;
+      font-size: 0.9rem;
       color: rgba(226, 232, 240, 0.7);
     }
   `;
@@ -56,10 +70,17 @@ export class AmbientClock extends LitElement {
   }
 
   private formatTime(date: Date) {
-    return date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    return date.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
   }
 
   private formatZone(date: Date) {
-    return date.toLocaleTimeString(undefined, { timeZoneName: 'short' }).split(' ').pop() ?? '';
+    return date
+      .toLocaleTimeString(undefined, { timeZoneName: 'short' })
+      .split(' ')
+      .pop() ?? '';
   }
 }

@@ -20,7 +20,10 @@ export function buildPreviewHtml(webview: vscode.Webview, extensionUri: vscode.U
         <html lang="en">
         <head>
             <meta charset="utf-8" />
-            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}' ${webview.cspSource} blob:;">
+            <meta
+                http-equiv="Content-Security-Policy"
+                content="default-src 'none'; style-src ${webview.cspSource}; img-src ${webview.cspSource} data:; script-src 'nonce-${nonce}' ${webview.cspSource} blob:;"
+            >
             <link href="${styleUri}" rel="stylesheet" />
         </head>
         <body>
@@ -40,6 +43,8 @@ export function buildPreviewHtml(webview: vscode.Webview, extensionUri: vscode.U
             <script nonce="${nonce}">
                 const bundle = ${bundleLiteral};
                 const initialMock = ${mockLiteral};
+                const assets = ${JSON.stringify(state.assets ?? {}).replace(/</g, '\\u003c')};
+                window.__litPreviewAssets = assets;
                 const container = document.getElementById('preview-root');
 
                 window.__litPreviewDefineQueue = [];

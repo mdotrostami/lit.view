@@ -1,5 +1,4 @@
-import { build, type Metafile } from 'esbuild';
-import type { BuildOptions } from 'esbuild';
+import { build, type Metafile, type BuildOptions } from 'esbuild';
 import { resolveComponentGraph, type ResolveComponentGraphOptions, type ComponentGraph } from './resolver';
 
 const DEFAULT_LOADERS: NonNullable<BuildOptions['loader']> = {

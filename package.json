@@ -3,6 +3,7 @@
   "displayName": "Lit View",
   "description": "Right-click a Lit TypeScript file to preview it in a webview.",
   "icon": "media/lit-eye.png",
+  "publisher": "mdotrostami",
   "galleryBanner": {
     "color": "#000000",
     "theme": "dark"
@@ -89,7 +90,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:mdotrostami/lit.view.git"
+    "url": "https://github.com/mdotrostami/lit.view.git"
   },
   "devDependencies": {
     "@types/node": "20.x",

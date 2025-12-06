@@ -9,52 +9,102 @@ export class PulseTabs extends LitElement {
   static override styles = css`
     :host {
       display: block;
-      border-radius: 16px;
-      padding: 18px;
-      background: #020617;
-      color: #f8fafc;
       max-width: 400px;
+      padding: 26px 28px;
+      border-radius: 22px;
+
+      /* Ambient unified style */
+      background:
+        radial-gradient(circle at top left, rgba(238,238,238,0.06) 0%, transparent 60%),
+        radial-gradient(circle at bottom right, rgba(17,43,0,0.25) 0%, transparent 70%),
+        rgba(12,20,32,0.7);
+
+      border: 2px solid rgba(148,163,184,0.28);
+
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+
+      box-shadow:
+        0 12px 34px rgba(0, 0, 0, 0.45),
+        inset 0 0 22px rgba(255, 255, 255, 0.04);
+
       font-family: 'Inter', system-ui, sans-serif;
-      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: rgba(226, 232, 240, 0.95);
     }
 
     nav {
       display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 22px;
     }
 
     button {
       flex: 1;
       border-radius: 999px;
-      border: 1px solid transparent;
-      background: rgba(148, 163, 184, 0.15);
-      color: inherit;
-      padding: 8px 12px;
+      border: 1px solid rgba(148,163,184,0.25);
+
+      /* Ambient glass pill */
+      background: rgba(255,255,255,0.06);
+      padding: 10px 14px;
+      color: rgba(226,232,240,0.85);
+
       font-weight: 600;
       cursor: pointer;
-      transition: background 120ms ease, border 120ms ease;
+      transition: 180ms ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    button:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
 
     button[aria-selected='true'] {
-      background: #22d3ee;
-      color: #020617;
-      border-color: #22d3ee;
+      background: linear-gradient(
+        135deg,
+        rgba(96,165,250,0.85),
+        rgba(129,140,248,0.9)
+      );
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 10px 28px rgba(96,165,250,0.35);
     }
 
     section {
-      min-height: 100px;
-      padding: 12px 10px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      min-height: 120px;
+      padding: 18px 16px;
+      border-radius: 18px;
+
+      /* Ambient panel */
+      background:
+        radial-gradient(circle at top left, rgba(238,238,238,0.06) 0%, transparent 65%),
+        rgba(12,20,32,0.55);
+
+      border: 1px solid rgba(148,163,184,0.22);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      box-shadow:
+        inset 0 0 14px rgba(255,255,255,0.03);
     }
 
     .title {
-      font-size: 1.1rem;
+      font-size: 1rem;
+      font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #94a3b8;
+      color: rgba(148,163,184,0.85);
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgba(226,232,240,0.88);
+      line-height: 1.45;
     }
   `;
 
@@ -73,6 +123,7 @@ export class PulseTabs extends LitElement {
           `
         )}
       </nav>
+
       <section role="tabpanel">
         <div class="title">${this.tabs[this.activeIndex]}</div>
         <p>${this.summaryFor(this.tabs[this.activeIndex])}</p>

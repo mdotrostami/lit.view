@@ -12,6 +12,7 @@ export type PreviewState = {
     error?: string;
     schema: MockField[];
     mockData: Record<string, unknown>;
+    assets?: Record<string, string>;
 };
 
 export interface PreviewPanel {
@@ -78,8 +79,11 @@ export class LitPreviewCoordinator implements vscode.Disposable {
 
         let bundle: string | undefined;
         let bundleError: string | undefined;
+        let assetData: Record<string, string> = {};
         try {
-            bundle = await this.bundleFile(fileUri);
+            const bundleResult = await this.bundleFile(fileUri, source);
+            bundle = bundleResult.code;
+            assetData = bundleResult.assets;
         } catch (error) {
             bundleError = error instanceof Error ? error.message : String(error);
         }
@@ -91,7 +95,11 @@ export class LitPreviewCoordinator implements vscode.Disposable {
             bundle,
             error: bundleError,
             schema,
-            mockData
+            mockData: {
+                ...mockData,
+                ...assetData
+            },
+            assets: assetData
         };
     }
 
@@ -102,15 +110,17 @@ export class LitPreviewCoordinator implements vscode.Disposable {
 
         this.currentState.mockData = data;
         this.previewPanel?.applyMockData(data);
-        this.mockPanel?.syncMockData(data);
     }
 
-    private async bundleFile(fileUri: vscode.Uri): Promise<string> {
+    private async bundleFile(fileUri: vscode.Uri, source: string): Promise<{ code: string; assets: Record<string, string> }> {
         const workspaceFolder = vscode.workspace.getWorkspaceFolder(fileUri);
         const absWorkingDir = workspaceFolder?.uri.fsPath ?? path.dirname(fileUri.fsPath);
 
         const tsconfigAliases = await resolveTsconfigPathAliases(absWorkingDir);
         const plugins = tsconfigAliases.length ? [createTsconfigPathAliasPlugin(tsconfigAliases)] : undefined;
+
+        const assetPaths = this.collectAssetPaths(source, path.dirname(fileUri.fsPath));
+        const assets = await this.readAssets(assetPaths);
 
         const result = await build({
             entryPoints: [fileUri.fsPath],
@@ -134,7 +144,7 @@ export class LitPreviewCoordinator implements vscode.Disposable {
             throw new Error('Bundler generated no output.');
         }
 
-        return output;
+        return { code: output, assets };
     }
 
     private async readFileContent(fileUri: vscode.Uri): Promise<string> {
@@ -173,8 +183,76 @@ export class LitPreviewCoordinator implements vscode.Disposable {
         }, {});
     }
 
+    private collectAssetPaths(source: string, baseDir: string): Record<string, string> {
+        const sourceFile = ts.createSourceFile('component.ts', source, ts.ScriptTarget.Latest, true);
+        const assets: Record<string, string> = {};
+
+        const visit = (node: ts.Node) => {
+            if (ts.isPropertyDeclaration(node) && node.initializer && ts.isStringLiteral(node.initializer)) {
+                const value = node.initializer.text;
+                if (ASSET_EXT_PATTERN.test(value) && ts.isIdentifier(node.name)) {
+                    assets[node.name.text] = this.resolveAssetPath(value, baseDir);
+                }
+            }
+
+            ts.forEachChild(node, visit);
+        };
+
+        visit(sourceFile);
+        return assets;
+    }
+
+    private async readAssets(assetPaths: Record<string, string>): Promise<Record<string, string>> {
+        const entries = await Promise.all(Object.entries(assetPaths).map(async ([key, absolutePath]) => {
+            try {
+                const fileUri = vscode.Uri.file(absolutePath);
+                const bytes = await vscode.workspace.fs.readFile(fileUri);
+                const mimeType = this.determineMimeType(path.extname(absolutePath));
+                if (!mimeType) {
+                    return [key, undefined];
+                }
+
+                const dataUrl = `data:${mimeType};base64,${Buffer.from(bytes).toString('base64')}`;
+                return [key, dataUrl];
+            } catch (error) {
+                console.warn('Lit View preview asset read failed', absolutePath, error);
+                return [key, undefined];
+            }
+        }));
+
+        return Object.fromEntries(entries.filter(([, value]) => typeof value === 'string') as [string, string][]);
+    }
+
+    private resolveAssetPath(specifier: string, baseDir: string): string {
+        if (path.isAbsolute(specifier)) {
+            return specifier;
+        }
+
+        if (specifier.startsWith('./') || specifier.startsWith('../')) {
+            return path.resolve(baseDir, specifier);
+        }
+
+        return path.resolve(baseDir, specifier);
+    }
+
+    private determineMimeType(extension: string): string | undefined {
+        return MIME_TYPE_BY_EXT[extension.toLowerCase()];
+    }
+
     dispose() {}
 }
+
+const ASSET_EXT_PATTERN = /\.(png|jpe?g|gif|svg|webp|avif)$/i;
+
+const MIME_TYPE_BY_EXT: Record<string, string> = {
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.webp': 'image/webp',
+    '.avif': 'image/avif'
+};
 
 type TsconfigPathAlias = {
     alias: string;

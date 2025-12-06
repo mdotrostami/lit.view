@@ -66,7 +66,6 @@ export function buildMockHtml(webview: vscode.Webview, extensionUri: vscode.Uri,
         const samples = ${samplesLiteral};
         let mockData = ${mockLiteral};
 
-        console.log('mockData:', mockData);
 
         const formRoot = document.getElementById('mock-form');
         const statusEl = document.getElementById('mock-status');
@@ -348,12 +347,6 @@ export function buildMockHtml(webview: vscode.Webview, extensionUri: vscode.Uri,
             return list[Math.floor(Math.random() * list.length)];
         }
 
-        window.addEventListener('message', (event) => {
-            if (event.data?.type === 'mock-data') {
-                mockData = event.data.payload || {};
-                renderForm();
-            }
-        });
 
         renderForm();
     </script>
