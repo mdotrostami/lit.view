@@ -15,7 +15,6 @@ export function buildPreviewHtml(webview: vscode.Webview, extensionUri: vscode.U
     const nonce = Math.random().toString(36).slice(2, 10);
     const bundleLiteral = state.bundle ? JSON.stringify(state.bundle) : '""';
     const mockLiteral = JSON.stringify(state.mockData ?? {}).replace(/</g, '\\u003c');
-    const sourceContent = escapeHtml(state.source);
 
     return `<!DOCTYPE html>
         <html lang="en">
@@ -34,7 +33,6 @@ export function buildPreviewHtml(webview: vscode.Webview, extensionUri: vscode.U
                     <section class="stack-section">
                         <div class="stack-body preview-stage">
                             <div id="preview-root" class="preview-root ${state.bundle ? '' : 'hidden'}"></div>
-                            <pre id="preview-source" class="preview-source ${state.bundle ? 'hidden' : ''}">${sourceContent}</pre>
                         </div>
                     </section>
                 </main>

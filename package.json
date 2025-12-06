@@ -104,5 +104,6 @@
     "esbuild": "^0.27.0",
     "lit": "^3.3.1",
     "typescript": "^5.9.3"
-  }
+  },
+  "bundleDependencies":["esbuild","typescript","lit"]
 }

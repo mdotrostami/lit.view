@@ -5,7 +5,7 @@ docs/
 .vscode/
 .vscode-test/
 .github/
-node_modules/
+# node_modules/
 out/test/
 tsconfig.json
 tsconfig.*.json
@@ -13,9 +13,7 @@ package-lock.json
 README.md
 examples/
 extension/
-some.js
-some.js.map
-lit-view-0.0.1.vsix
+*.vsix
 previewConfig.json
 .eslintrc.json
 *.tsbuildinfo
